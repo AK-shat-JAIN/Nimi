@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "install-client": "cd client && npm install",
-    "build-client": "cd client && npm run build",
-    "start-client": "cd client && npm run start"
+    "install-client": "cd Client && npm install",
+    "build-client": "cd Client && npm run build",
+    "start-client": "cd Client && npm run start"
   },
   "keywords": [],
   "author": "",
