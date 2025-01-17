@@ -16,7 +16,7 @@ const userSchema = new Schema({
     },
     phone: {
         type: String,
-        // required: [true, 'Please enter your phone number'],
+        required: [true, 'Please enter your phone number'],
         trim: true,
         unique: true,
         match: [
@@ -97,7 +97,7 @@ userSchema.pre('save', async function (next) {
 userSchema.methods = {
     getJwtToken: async function(){
         return await jwt.sign(
-            { id: this._id, email: this.email, role: this.role, subscription: this.subscription }, 
+            { id: this._id, email: this.email, role: this.role }, 
             process.env.JWT_SECRET, 
             { expiresIn: process.env.JWT_EXPIRY }
         )

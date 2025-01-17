@@ -15,8 +15,7 @@ const cookieOptions = {
 }
 
 const register = async (req, res, next) => {
-    console.log(req.body)
-    const { fullName, email, password } = req.body
+    const { fullName, phone, email, password, role, profile, branch, todo} = req.body
 
     if(!fullName || !email || !password){
         return next(new AppError('Please fill in all fields', 400))
@@ -29,16 +28,17 @@ const register = async (req, res, next) => {
 
     const user = await User.create({
         fullName,
+        phone,
         email,
         password,
         avatar: {
             public_id: email,
             secure_id: '123'
         },
-        subscription: {
-            id: 'None',
-            status: 'inactive'
-        }
+        role,
+        profile,
+        branch,
+        todo
     })
 
     if(!user){
@@ -49,7 +49,7 @@ const register = async (req, res, next) => {
     if(req.file){
         try {
             const result = await cloudinary.v2.uploader.upload(req.file.path,{
-                folder: 'lms',
+                folder: 'user',
                 width: 250,
                 height: 250,
                 gravity: 'face',
@@ -68,7 +68,6 @@ const register = async (req, res, next) => {
             return next(new AppError(error.message || 'Problem with file upload', 500))
         }
     }
-
     await user.save()
 
     user.password = undefined   // To not send the password in the response
