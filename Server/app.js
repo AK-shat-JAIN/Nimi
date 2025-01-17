@@ -15,10 +15,12 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(cors(
-// [
-// ]
-// ));
+app.use(cors(
+    {
+        origin: [process.env.FRONTEND_URL],
+        credentials: true
+    }
+));
 app.use(cokieParser());
 app.use(morgan("dev")); // log every request to the console for debugging purposes
 
